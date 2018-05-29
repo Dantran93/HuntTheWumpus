@@ -13,6 +13,7 @@ public class Tile
 	private boolean hasSlime;
 	private boolean hasBlood;
 	private boolean hasGoop;
+	private boolean hasSlimePit;
 	private boolean hasHunter;
 	private boolean hasBat;
 	private boolean hasWumpus;
@@ -27,14 +28,52 @@ public class Tile
 	
 	public Tile ()
 	{
-		this.hasFog    = false;
-		this.hasSlime  = false;
-		this.hasBlood  = false;
-		this.hasGoop   = false;
-		this.hasHunter = false;
-		this.hasBat    = false;
-		this.hasWumpus = false;
+		this.hasFog      = false;
+		this.hasSlime    = false;
+		this.hasBlood    = false;
+		this.hasGoop     = false;
+		this.hasSlimePit = false;
+		this.hasHunter   = false;
+		this.hasBat      = false;
+		this.hasWumpus   = false;
 	} // Tile Constructor ()
+	
+	
+	
+	/**************************************************************************
+	 * toString()
+	 * 
+	 * Purpose: Returns the string representation of the tile, including any
+	 * 		information about the tile.
+	 * 
+	 * Parameters: None.
+	 * 
+	 * Returns: String. Representation of the tile.
+	 *************************************************************************/
+	
+	public String toString ()
+	{
+		String retVal = "[";
+		
+		if (this.hasHunter)
+			retVal += "H";
+		else if (this.hasSlimePit)
+			retVal += "P";
+		else if (this.hasSlime)
+			retVal += "S";
+		else if (this.hasBlood)
+			retVal += "B";
+		else if (this.hasGoop)
+			retVal += "G";
+		else if (this.hasBat)
+			retVal += "b";
+		else if (this.hasWumpus)
+			retVal += "W";
+		else
+			retVal += " ";
+		
+		return retVal + "]";
+	} // toString()
 	
 	
 	
@@ -190,6 +229,41 @@ public class Tile
 		
 		this.hasGoop = hasGoop;
 	} // setGoop()
+	
+	
+	
+	/**************************************************************************
+	 * hasSlimePit()
+	 * 
+	 * Purpose: Return true if the tile has a slime pit, false otherwise.
+	 * 
+	 * Parameters: None.
+	 * 
+	 * Returns: boolean. Whether or not the tile has a slime pit on it.
+	 *************************************************************************/
+	
+	public boolean hasSlimePit ()
+	{
+		return hasSlimePit;
+	} // hasSlimePit()
+	
+	
+	
+	/**************************************************************************
+	 * setSlimePit()
+	 * 
+	 * Purpose: Change the status of a slime pit on the tile.
+	 * 
+	 * Parameters:
+	 * 		boolean hasSlimePit -- New status of a slime pit on the tile.
+	 * 
+	 * Returns: void.
+	 *************************************************************************/
+	
+	public void setSlimePit (boolean hasSlimePit)
+	{
+		this.hasSlimePit = hasSlimePit;
+	} // setSlimePit()
 	
 	
 	
