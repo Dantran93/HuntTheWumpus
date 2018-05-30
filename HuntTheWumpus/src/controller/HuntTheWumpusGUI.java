@@ -23,6 +23,7 @@ public class HuntTheWumpusGUI
 	public static void main (String[] args)
 	{
 		Map map = new Map();
+		map.initialize();
 		System.out.println(map);
 		
 	} // main()

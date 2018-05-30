@@ -11,7 +11,7 @@ import java.util.Random;
 public class Map
 {
 	// Constants
-	private static final int SIZE           = 10;
+	private static final int SIZE = 10;
 	
 	
 	
@@ -23,32 +23,75 @@ public class Map
 	/**************************************************************************
 	 * Map Constructor ()
 	 * 
-	 * Purpose: 
+	 * Purpose: Creates and initializes a new map that is SIZExSIZE cells.
+	 * 		The slime pits and Wumpus are randomly placed on the map, along
+	 * 		with any slime and blood. Only blood and slime overlap to create
+	 * 		goop.
 	 *************************************************************************/
 	
 	public Map ()
 	{
 		this.tiles = new Tile[SIZE][SIZE];
 		
-		for (int i = 0; i < SIZE; i++)
-			for (int j = 0; j < SIZE; j++)
-				this.tiles[i][j] = new Tile();
-		
-		placeSlimePits();
+		for (int row = 0; row < SIZE; row++)
+			for (int column = 0; column < SIZE; column++)
+				this.tiles[row][column] = new Tile();
 	} // Map Constructor ()
+	
+	
+	
+	/**************************************************************************
+	 * initialize()
+	 * 
+	 * Purpose: Places the slime pits and Wumpus on the map, along with the
+	 * 		slime and blood.
+	 * 
+	 * Parameters: None.
+	 * 
+	 * Returns: void.
+	 *************************************************************************/
+	
+	public void initialize ()
+	{
+		placeSlimePits();
+		placeWumpus();
+	} // initialize()
+	
+	
+	
+	/**************************************************************************
+	 * clear()
+	 * 
+	 * Purpose: Clears every tile on the map of the slime pits, Wumpus, blood,
+	 * 		slime, and goop.
+	 * 
+	 * Parameters: None.
+	 * 
+	 * Returns: void.
+	 *************************************************************************/
+	
+	public void clear ()
+	{
+		for (int row = 0; row < SIZE; row++)
+			for (int column = 0; column < SIZE; column++)
+				tiles[row][column].clear();
+	} // clear()
 	
 	
 	
 	/**************************************************************************
 	 * getTile()
 	 * 
-	 * Purpose:
+	 * Purpose: Returns the tile on the map with the given row and column
+	 * 		indices.
+	 * 
+	 * 		Throws IllegalArgumentxception if the coordinates are out of bounds.
 	 * 
 	 * Parameters:
-	 * 		int row --
-	 * 		int column --
+	 * 		int row -- Row index in the map.
+	 * 		int column -- Column index in the map.
 	 * 
-	 * Returns: Tile.
+	 * Returns: Tile. The tile in the map with the given coordinates.
 	 *************************************************************************/
 	
 	public Tile getTile (int row, int column)
@@ -65,21 +108,21 @@ public class Map
 	/**************************************************************************
 	 * toString()
 	 * 
-	 * Purpose:
+	 * Purpose: Returns the string (textual) representation of the map.
 	 * 
-	 * Parameters:
+	 * Parameters: None.
 	 * 
-	 * Returns:
+	 * Returns: String. The string (textual) representation of the map.
 	 *************************************************************************/
 	
 	public String toString ()
 	{
 		String retVal = "";
 		
-		for (int i = 0; i < SIZE; i++)
+		for (int row = 0; row < SIZE; row++)
 		{
-			for (int j = 0; j < SIZE; j++)
-				retVal += tiles[i][j].toString();
+			for (int column = 0; column < SIZE; column++)
+				retVal += tiles[row][column].toString();
 			retVal += "\n";
 		}
 		
@@ -91,11 +134,12 @@ public class Map
 	/**************************************************************************
 	 * placeSlimePits()
 	 * 
-	 * Purpose:
+	 * Purpose: Randomly places 3-5 slime pits on the map, along with slime
+	 * 		around each pit in north, south, east, and west positions.
 	 * 
-	 * Parameters:
+	 * Parameters: None.
 	 * 
-	 * Returns:
+	 * Returns: void.
 	 *************************************************************************/
 	
 	private void placeSlimePits ()
@@ -107,8 +151,7 @@ public class Map
 		int row, column;
 		for (int i = 0; i < numSlimePits; i++)
 		{
-			// Keep choosing random locations until a location
-			// without a slime pit is chosen
+			// Find a random spot on the map that is not already occupied
 			while (true)
 			{
 				row    = rand.nextInt(SIZE);
@@ -125,12 +168,21 @@ public class Map
 				}
 			}
 		}
-	} // 
+	} // placeSlimePits()
 	
 	
 	
 	/**************************************************************************
+	 * placeSlime()
 	 * 
+	 * Purpose: Places slime on the tile with the given coordinates. If the
+	 * 		location is off the edge, the location wraps around.
+	 * 
+	 * Parameters:
+	 * 		int row -- Row coordinate on the map.
+	 * 		int column -- Column coordinate on the map.
+	 * 
+	 * Returns: void.
 	 *************************************************************************/
 	
 	private void placeSlime (int row, int column)
@@ -149,15 +201,75 @@ public class Map
 	
 	
 	
+	/**************************************************************************
+	 * placeWumpus()
+	 * 
+	 * Purpose: Randomly places the Wumpus on the map, along with blood all
+	 * 		around the Wumpus.
+	 * 
+	 * Parameters: None.
+	 * 
+	 * Returns: void.
+	 *************************************************************************/
+	
+	private void placeWumpus ()
+	{
+		Random rand = new Random();
+		
+		// Find a random spot on the map that is not already occupied
+		int row, column;
+		while (true)
+		{
+			row    = rand.nextInt(SIZE);
+			column = rand.nextInt(SIZE);
+			
+			if (! (tiles[row][column].hasSlimePit() || tiles[row][column].hasSlime()))
+			{
+				tiles[row][column].setWumpus(true);
+				placeBlood(row-1, column);
+				placeBlood(row-2, column);
+				placeBlood(row+1, column);
+				placeBlood(row+2, column);
+				placeBlood(row,   column-1);
+				placeBlood(row,   column-2);
+				placeBlood(row,   column+1);
+				placeBlood(row,   column+2);
+				placeBlood(row-1, column-1);
+				placeBlood(row-1, column+1);
+				placeBlood(row+1, column-1);
+				placeBlood(row+1, column+1);
+				break;
+			}
+		}
+	} // placeWumpus()
 	
 	
 	
+	/**************************************************************************
+	 * placeBlood()
+	 * 
+	 * Purpose: Places blood on the tile with the given coordinates. If the
+	 * 		location is off the edge, the location wraps around.
+	 * 
+	 * Parameters:
+	 * 		int row -- Row coordinate on the map.
+	 * 		int column -- Column coordinate on the map.
+	 * 
+	 * Returns: void.
+	 *************************************************************************/
 	
-	
-	
-	
-	
-	
-	
+	private void placeBlood (int row, int column)
+	{
+		row = row % SIZE;
+		if (row < 0)
+			row = row + SIZE;
+		
+		column = column % SIZE;
+		if (column < 0)
+			column = column + SIZE;
+		
+		if (! (tiles[row][column].hasSlimePit() || tiles[row][column].hasWumpus()))
+			tiles[row][column].setBlood(true);
+	} // placeBlood()
 	
 } // class Map

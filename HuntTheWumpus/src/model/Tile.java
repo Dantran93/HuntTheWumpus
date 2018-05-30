@@ -14,8 +14,6 @@ public class Tile
 	private boolean hasBlood;
 	private boolean hasGoop;
 	private boolean hasSlimePit;
-	private boolean hasHunter;
-	private boolean hasBat;
 	private boolean hasWumpus;
 	
 	
@@ -33,10 +31,31 @@ public class Tile
 		this.hasBlood    = false;
 		this.hasGoop     = false;
 		this.hasSlimePit = false;
-		this.hasHunter   = false;
-		this.hasBat      = false;
 		this.hasWumpus   = false;
 	} // Tile Constructor ()
+	
+	
+	
+	/**************************************************************************
+	 * clear()
+	 * 
+	 * Purpose: Clears everything off of the tile. The tile becomes like
+	 * 		brand new.
+	 * 
+	 * Parameters: None.
+	 * 
+	 * Returns: void.
+	 *************************************************************************/
+	
+	public void clear ()
+	{
+		this.hasFog      = false;
+		this.hasSlime    = false;
+		this.hasBlood    = false;
+		this.hasGoop     = false;
+		this.hasSlimePit = false;
+		this.hasWumpus   = false;
+	} // clear()
 	
 	
 	
@@ -55,9 +74,7 @@ public class Tile
 	{
 		String retVal = "[";
 		
-		if (this.hasHunter)
-			retVal += "H";
-		else if (this.hasSlimePit)
+		if (this.hasSlimePit)
 			retVal += "P";
 		else if (this.hasSlime)
 			retVal += "S";
@@ -65,8 +82,6 @@ public class Tile
 			retVal += "B";
 		else if (this.hasGoop)
 			retVal += "G";
-		else if (this.hasBat)
-			retVal += "b";
 		else if (this.hasWumpus)
 			retVal += "W";
 		else
@@ -132,7 +147,8 @@ public class Tile
 	/**************************************************************************
 	 * setSlime()
 	 * 
-	 * Purpose: Change the status of slime on the tile.
+	 * Purpose: Change the status of slime on the tile. Places goop instead
+	 * 		if there is already blood on the tile.
 	 * 
 	 * Parameters:
 	 * 		boolean hasSlime -- New status of slime on the tile.
@@ -171,7 +187,8 @@ public class Tile
 	/**************************************************************************
 	 * setBlood()
 	 * 
-	 * Purpose: Change the status of blood on the tile.
+	 * Purpose: Change the status of blood on the tile. Places goop instead
+	 * 		if there is already slime on the tile.
 	 * 
 	 * Parameters:
 	 * 		boolean hasBlood -- New status of blood on the tile.
@@ -210,7 +227,7 @@ public class Tile
 	/**************************************************************************
 	 * setGoop()
 	 * 
-	 * Purpose: Change the status of goop on the tile.
+	 * Purpose: Change the status of goop on the tile. Clears blood and slime.
 	 * 
 	 * Parameters:
 	 * 		boolean hasGoop -- New status of goop on the tile.
@@ -264,76 +281,6 @@ public class Tile
 	{
 		this.hasSlimePit = hasSlimePit;
 	} // setSlimePit()
-	
-	
-	
-	/**************************************************************************
-	 * hasHunter()
-	 * 
-	 * Purpose: Return true if the tile has the hunter, false otherwise.
-	 * 
-	 * Parameters: None.
-	 * 
-	 * Returns: boolean. Whether or not the tile has the hunter on it.
-	 *************************************************************************/
-	
-	public boolean hasHunter ()
-	{
-		return hasHunter;
-	} // hasHunter()
-	
-	
-	
-	/**************************************************************************
-	 * setHunter()
-	 * 
-	 * Purpose: Change the status of the hunter on the tile.
-	 * 
-	 * Parameters:
-	 * 		boolean hasHunter -- New status of the hunter on the tile.
-	 * 
-	 * Returns: void.
-	 *************************************************************************/
-	
-	public void setHunter (boolean hasHunter)
-	{
-		this.hasHunter = hasHunter;
-	} // setHunter()
-	
-	
-	
-	/**************************************************************************
-	 * hasBat()
-	 * 
-	 * Purpose: Return true if the tile has a bat, false otherwise.
-	 * 
-	 * Parameters: None.
-	 * 
-	 * Returns: boolean. Whether or not the tile has a bat on it.
-	 *************************************************************************/
-	
-	public boolean hasBat ()
-	{
-		return hasBat;
-	} // hasBat()
-	
-	
-	
-	/**************************************************************************
-	 * setBat()
-	 * 
-	 * Purpose: Change the status of a bat on the tile.
-	 * 
-	 * Parameters:
-	 * 		boolean hasBat -- New status of a bat on the tile.
-	 * 
-	 * Returns: void.
-	 *************************************************************************/
-	
-	public void setBat (boolean hasBat)
-	{
-		this.hasBat = hasBat;
-	} // setBat()
 	
 	
 	
