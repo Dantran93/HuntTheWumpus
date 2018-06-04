@@ -26,6 +26,7 @@ public class Tile
 	
 	public Tile ()
 	{
+		//this.hasFog      = true;
 		this.hasFog      = false;
 		this.hasSlime    = false;
 		this.hasBlood    = false;
@@ -316,5 +317,22 @@ public class Tile
 	{
 		this.hasWumpus = hasWumpus;
 	} // setWumpus()
+	
+	
+	
+	/**************************************************************************
+	 * isEmpty()
+	 * 
+	 * Purpose: Return the status of if the tile is empty or not.
+	 * 
+	 * Parameters: None.
+	 * 
+	 * Returns: boolean. True if the tile has nothing on it, false otherwise.
+	 *************************************************************************/
+	
+	public boolean isEmpty ()
+	{
+		return (!(hasSlime || hasBlood || hasGoop || hasSlimePit || hasWumpus));
+	} // isEmpty()
 	
 } // class Tile

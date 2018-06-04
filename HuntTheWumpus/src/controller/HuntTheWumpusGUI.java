@@ -1,9 +1,16 @@
 package controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import model.ImageLibrary;
 import model.Map;
 import view.ImageView;
 
@@ -19,13 +26,15 @@ public class HuntTheWumpusGUI extends Application
 	private static final int WINDOW_HEIGHT = 600;
 	
 	private static final String WINDOW_TITLE = "Hunt The Wumpus";
-	
+	private static final String GAME_MUSIC   = "music/deadmau5-ID.wav";
 	
 	
 	
 	private Pane frame;
 	private ImageView imageView;
-	private Map map;
+	
+	private Media song;
+	private MediaPlayer music;
 	
 	
 	
@@ -49,14 +58,11 @@ public class HuntTheWumpusGUI extends Application
 	{
 		initWindow(stage);
 		addImageView();
-		
-		
-		map = new Map();
-		map.initialize();
-		
-		
-		
 		stage.show();
+		
+		song = new Media(new File(GAME_MUSIC).toURI().toString());
+		music = new MediaPlayer(song);
+		music.play();
 	}
 	
 	
@@ -86,7 +92,7 @@ public class HuntTheWumpusGUI extends Application
 	 * 
 	 */
 	
-	private void addImageView ()
+	private void addImageView () throws FileNotFoundException
 	{
 		imageView = new ImageView();
 		imageView.setTranslateX((WINDOW_WIDTH - imageView.getWidth()) / 2 + 5);

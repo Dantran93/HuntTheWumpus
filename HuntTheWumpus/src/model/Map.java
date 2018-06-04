@@ -1,5 +1,6 @@
 package model;
 
+import java.util.List;
 import java.util.Random;
 
 /******************************************************************************
@@ -17,6 +18,8 @@ public class Map
 	
 	// Fields
 	private Tile[][] tiles;
+	private List<Bat> bats;
+	private Hunter hunter;
 	
 	
 	
@@ -55,7 +58,36 @@ public class Map
 	{
 		placeSlimePits();
 		placeWumpus();
+		placeHunter();
 	} // initialize()
+	
+	
+	
+	/**************************************************************************
+	 * getSize()
+	 * 
+	 * Purpose: Returns the size of the map.
+	 * 
+	 * Parameters: None.
+	 * 
+	 * Returns: int. The size of the map.
+	 *************************************************************************/
+	
+	public int getSize ()
+	{
+		return SIZE;
+	} // getSize()
+	
+	
+	
+	/*
+	 * 
+	 */
+	
+	public Hunter getHunter ()
+	{
+		return hunter;
+	}
 	
 	
 	
@@ -271,5 +303,37 @@ public class Map
 		if (! (tiles[row][column].hasSlimePit() || tiles[row][column].hasWumpus()))
 			tiles[row][column].setBlood(true);
 	} // placeBlood()
+	
+	
+	
+	/*
+	 * 
+	 */
+	
+	private void placeHunter ()
+	{
+		hunter = new Hunter();
+		Random rand = new Random();
+		int row, column;
+		
+		while (true)
+		{
+			row    = rand.nextInt(SIZE);
+			column = rand.nextInt(SIZE);
+			
+			if (tiles[row][column].isEmpty())
+			{
+				hunter.getLocation().setRow(row);
+				hunter.getLocation().setColumn(column);
+				tiles[row][column].setFog(false);
+				break;
+			}
+		}
+	} //
+	
+	
+	
+	
+	
 	
 } // class Map
