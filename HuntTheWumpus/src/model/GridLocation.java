@@ -96,4 +96,23 @@ public class GridLocation
 		column = newColumn;
 	} // setColumn()
 	
+	
+	
+	/**************************************************************************
+	 * equals()
+	 * 
+	 * Purpose: Compares the row and column coordinates between two locations.
+	 * 
+	 * Parameters:
+	 * 		GridLocation other -- The other location to compare with.
+	 * 
+	 * Returns: boolean. True if the row and column coordinates between the
+	 * 		two locations are equal, false otherwise.
+	 *************************************************************************/
+	
+	public boolean equals (GridLocation other)
+	{
+		return this.row == other.row && this.column == other.column;
+	} // equals()
+	
 } // class GridLocation

@@ -1,5 +1,6 @@
 package model;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -59,6 +60,7 @@ public class Map
 		placeSlimePits();
 		placeWumpus();
 		placeHunter();
+		placeBats();
 	} // initialize()
 	
 	
@@ -80,14 +82,37 @@ public class Map
 	
 	
 	
-	/*
+	/**************************************************************************
+	 * getHunter()
 	 * 
-	 */
+	 * Purpose: Returns the hunter in the game.
+	 * 
+	 * Parameters: None.
+	 * 
+	 * Returns: Hunter. The hunter on the map.
+	 *************************************************************************/
 	
 	public Hunter getHunter ()
 	{
 		return hunter;
-	}
+	} // getHunter()
+	
+	
+	
+	/**************************************************************************
+	 * getBats()
+	 * 
+	 * Purpose: Returns the list of bats on the map.
+	 * 
+	 * Parameters: None.
+	 * 
+	 * Returns: List<Bat>. The list of bats on the map.
+	 *************************************************************************/
+	
+	public List<Bat> getBats ()
+	{
+		return bats;
+	} // getBats()
 	
 	
 	
@@ -306,9 +331,15 @@ public class Map
 	
 	
 	
-	/*
+	/**************************************************************************
+	 * placeHunter()
 	 * 
-	 */
+	 * Purpose: Randomly places the hunter on an empty tile on the map.
+	 * 
+	 * Parameters: None.
+	 * 
+	 * Returns: void.
+	 *************************************************************************/
 	
 	private void placeHunter ()
 	{
@@ -329,11 +360,46 @@ public class Map
 				break;
 			}
 		}
-	} //
+	} // placeHunter()
 	
 	
 	
+	/**************************************************************************
+	 * placeBats()
+	 * 
+	 * Purpose: Create and place 1-3 bats on empty tiles on the map.
+	 * 
+	 * Parameters: None.
+	 * 
+	 * Returns: void.
+	 *************************************************************************/
 	
-	
+	private void placeBats ()
+	{
+		bats = new LinkedList<Bat>();
+		Random rand = new Random();
+		GridLocation batLoc;
+		int numBats = rand.nextInt(3) + 1;   // 1-3 bats placed
+		int row, column;
+		
+		for (int i = 0; i < numBats; i++)
+		{
+			bats.add(new Bat());
+			while (true)
+			{
+				row    = rand.nextInt(SIZE);
+				column = rand.nextInt(SIZE);
+				batLoc = new GridLocation(row, column);
+				
+				// Empty tiles that do not have the hunter
+				if (tiles[row][column].isEmpty() && !batLoc.equals(hunter.getLocation()))
+				{
+					bats.get(i).getLocation().setRow(row);
+					bats.get(i).getLocation().setColumn(column);
+					break;
+				}
+			}
+		}
+	} // placeBats()
 	
 } // class Map

@@ -26,8 +26,8 @@ public class Tile
 	
 	public Tile ()
 	{
-		//this.hasFog      = true;
-		this.hasFog      = false;
+		this.hasFog      = true;
+		//this.hasFog      = false;
 		this.hasSlime    = false;
 		this.hasBlood    = false;
 		this.hasGoop     = false;

@@ -1,12 +1,13 @@
 package model;
 
 /******************************************************************************
+ * ImageLibrary.java
  * 
+ * Purpose: Contains file paths for the images in the game.
  *****************************************************************************/
 
 public class ImageLibrary
 {
-	
 	public static final String BAT      = "images/Bat.png";
 	public static final String BLOOD    = "images/Blood.png";
 	public static final String FOG      = "images/Fog.png";
